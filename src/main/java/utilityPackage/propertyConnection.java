@@ -2,21 +2,24 @@ package utilityPackage;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.Set;
 
 public class propertyConnection {
-	
+	FileInputStream fis=null;
+	Properties prop =null;
+	FileOutputStream fos=null;
 	public static void main(String[] args) {
 		propertyConnection pc = new propertyConnection();
 		pc.readProperty();
 		
 	}
 	public void readProperty() {
-		FileInputStream fis=null;
-		Properties prop =null;
+//		FileInputStream fis=null;
+//		Properties prop =null;
 		Hashtable<String, String> my_dict = new Hashtable<String, String>();
 		try {
 			prop=new Properties();
@@ -48,7 +51,32 @@ public class propertyConnection {
 
 	
 	public void writeProperty() {
-		
+	//	Hashtable<String, String> my_dict = new Hashtable<String, String>();
+		try {
+			prop=new Properties();
+			File fp=new File(System.getProperty("user.dir")+"\\src\\main\\java\\dataPackage\\property\\data.property");
+			if(fp.exists()) {
+				fis = new FileInputStream(fp);
+				fos = new FileOutputStream(fp);
+				prop.load(fis);
+				prop.setProperty("test61", "valuz");
+				prop.setProperty("test1", "new value");
+			//	fos.write(prop);
+				System.out.print("updated passed");
+			}	
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		finally {
+		try {
+			fos.close();
+			fis.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		}
 	}
 
 
